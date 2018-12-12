@@ -13,7 +13,10 @@ def build_master_dataframes(url , names_df):
              'strokes_gained' : ['https://www.pgatour.com/stats/stat.02675.html' , 'AVERAGE'] , 
              'total_money' : ['https://www.pgatour.com/stats/stat.194.html' , 'MONEY']}
 
+    # jeff_df = pd.DataFrame(['Jeff Druce'], columns=['name'])
+    # names_df = names_df.append(jeff_df)
     master_df = pd.DataFrame(index = names_df['name'])
+
     for stat in stats.keys():
         print(stat)
         table_temp_stat = pd.read_html(stats[stat][0])
@@ -45,6 +48,14 @@ def build_master_dataframes(url , names_df):
         master_df = master_df.dropna(axis=0)
         # print(master_df)
         # master_df['stat'] =  [stat_dict(name) for name in table_temp_stat['PLAYER NAME']]
+
+    jeff_data = pd.DataFrame([[295.0, 45.0, 65.0, 05.0, 60.0, 35.0, -5.0, 2500000]], columns=master_df.columns.values.tolist())
+    print(jeff_data)
+    jeff_data.set_index([['Jeff Druce']], inplace=True)
+    # jeff_data.name = 'Jeff Druce'
+    master_df = master_df.append(jeff_data)
+    # master_df.loc['Jeff Druce'] = jeff_data
+    print(master_df)
 
 
     return master_df
